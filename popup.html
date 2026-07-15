@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>hix</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 340px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+    }
+
+    .header {
+      background: #1a73e8;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .header h1 {
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .body {
+      padding: 16px;
+    }
+
+    .panel {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #5f6368;
+    }
+
+    .amount-input,
+    .from-select,
+    .to-select {
+      width: 100%;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .amount-input {
+      height: 50px;
+      border: 1.5px solid #dadce0;
+      background: #fafafa;
+      padding: 0 12px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .amount-input:focus {
+      border-color: #1a73e8;
+      background: #ffffff;
+    }
+
+    .from-select,
+    .to-select {
+      height: 46px;
+      padding: 0 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .from-select {
+      border: 1.5px solid #1a73e8;
+      background: #f0f6ff;
+      color: #1a73e8;
+    }
+
+    .to-select {
+      border: 1.5px solid #dadce0;
+      background: #fafafa;
+      color: #1a1a1a;
+    }
+
+    .from-select:focus,
+    .to-select:focus {
+      border-color: #1a73e8;
+      background: #ffffff;
+    }
+
+    .arrow-row {
+      display: flex;
+      justify-content: center;
+      margin: 2px 0;
+    }
+
+    .arrow-btn {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid #dadce0;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #5f6368;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.15s;
+    }
+
+    .arrow-btn:hover {
+      border-color: #1a73e8;
+      color: #1a73e8;
+      background: #f0f4ff;
+    }
+
+    .result-box {
+      background: #f0f6ff;
+      border: 1.5px solid #c5d9f9;
+      border-radius: 12px;
+      padding: 14px 16px;
+      min-height: 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .result-label {
+      font-size: 11px;
+      color: #5f6368;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+
+    .result-amount {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a73e8;
+      line-height: 1.1;
+    }
+
+    .result-rate {
+      font-size: 12px;
+      color: #80868b;
+      margin-top: 4px;
+    }
+
+    .loading {
+      color: #80868b;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .error {
+      color: #d93025;
+      font-size: 13px;
+    }
+
+    .updated {
+      font-size: 11px;
+      color: #9aa0a6;
+      margin-top: 4px;
+    }
+
+    .footer {
+      padding: 8px 16px 14px;
+      text-align: center;
+    }
+
+    .google-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #1a73e8;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .google-btn:hover {
+      background: #f0f4ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-icon">$</div>
+    <h1>hix</h1>
+  </div>
+
+  <div class="body">
+    <div class="panel">
+      <div class="field-group">
+        <label class="field-label" for="amount">Miktar</label>
+        <input type="number" class="amount-input" id="amount" value="100" min="0" placeholder="Miktar" autofocus />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="from-currency">Kaynak para birimi</label>
+        <select class="from-select" id="from-currency">
+          <option value="USD">USD / Dolar</option>
+          <option value="EUR">EUR / Euro</option>
+          <option value="GBP">GBP / Sterlin</option>
+          <option value="CHF">CHF / Frank</option>
+          <option value="JPY">JPY / Yen</option>
+          <option value="SAR">SAR / Riyal</option>
+          <option value="TRY">TRY / Lira</option>
+        </select>
+      </div>
+
+      <div class="arrow-row">
+        <button class="arrow-btn" id="swap-btn" title="Para birimlerini degistir" aria-label="Para birimlerini degistir">&#8646;</button>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="to-currency">Hedef para birimi</label>
+        <select class="to-select" id="to-currency">
+          <option value="TRY">TRY / Turk Lirasi</option>
+          <option value="USD">USD / Amerikan Dolari</option>
+          <option value="EUR">EUR / Euro</option>
+          <option value="GBP">GBP / Ingiliz Sterlini</option>
+          <option value="CHF">CHF / Isvicre Frangi</option>
+          <option value="JPY">JPY / Japon Yeni</option>
+          <option value="SAR">SAR / Suudi Riyali</option>
+        </select>
+      </div>
+
+      <div class="result-box">
+        <div class="result-label">Sonuc</div>
+        <div class="result-amount" id="result-amount"><span class="loading">Yukleniyor...</span></div>
+        <div class="result-rate" id="result-rate"></div>
+        <div class="updated" id="updated-time"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button class="google-btn" id="google-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Google'da goruntule
+    </button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
